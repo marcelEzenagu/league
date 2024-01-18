@@ -1,15 +1,18 @@
 module elite-backend
 
-go 1.21.5
+go 1.18
 
 require (
 	github.com/gofiber/fiber/v2 v2.51.0
+	github.com/gofiber/template/html/v2 v2.1.0
 	github.com/joho/godotenv v1.5.1
 	go.mongodb.org/mongo-driver v1.13.1
 )
 
 require (
 	github.com/andybalholm/brotli v1.0.5 // indirect
+	github.com/gofiber/template v1.8.2 // indirect
+	github.com/gofiber/utils v1.1.0 // indirect
 	github.com/golang/snappy v0.0.1 // indirect
 	github.com/google/go-cmp v0.5.9 // indirect
 	github.com/google/uuid v1.4.0 // indirect

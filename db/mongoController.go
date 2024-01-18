@@ -2,7 +2,6 @@ package db
 
 import (
 	"context"
-	"fmt"
 	"log"
 	"os"
 	"time"
@@ -14,8 +13,16 @@ import (
 // var uri = os.Getenv("TRAVAS_DB_URI")
 
 type LeagueDB struct {
-	DB *mongo.Client
+	DB       *mongo.Client
+	MongoCtx context.Context
 }
+
+var (
+	TeamsCollection    *mongo.Collection
+	PlayersCollection  *mongo.Collection
+	NewsCollection     *mongo.Collection
+	FixturesCollection *mongo.Collection
+)
 
 func SetConnection(uri string) (*mongo.Client, error) {
 	serverAPIOptions := options.ServerAPI(options.ServerAPIVersion1)
@@ -38,7 +45,7 @@ func SetConnection(uri string) (*mongo.Client, error) {
 
 func OpenDbConnection() (*LeagueDB, error) {
 	uri := os.Getenv("DB_URI")
-	fmt.Println(uri)
+	dbName := os.Getenv("DB_NAME")
 
 	count := 0
 	for {
@@ -54,11 +61,15 @@ func OpenDbConnection() (*LeagueDB, error) {
 				DB: client,
 			}
 			log.Println("Connected to MongoDB ...")
+			teamsCollection := os.Getenv("TEAMS_COLLECTION")
+			playersCollection := os.Getenv("PLAYERS_COLLECTION")
+			fixturesCollection := os.Getenv("FIXTURES_COLLECTION")
+
+			TeamsCollection = client.Database(dbName).Collection(teamsCollection)
+			PlayersCollection = client.Database(dbName).Collection(playersCollection)
+			FixturesCollection = client.Database(dbName).Collection(fixturesCollection)
+
 			return dbConn, nil
-		}
-		if count >= 10 {
-			log.Println(err)
-			return nil, nil
 		}
 
 		log.Println("Trying to reconnect MongoDB database ...")
@@ -66,9 +77,3 @@ func OpenDbConnection() (*LeagueDB, error) {
 		continue
 	}
 }
-
-// func NewAdminDB(db *mongo.Client) *LeagueDB {
-// 	return &LeagueDB{
-// 		DB: db,
-// 	}
-// }

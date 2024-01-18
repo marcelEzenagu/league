@@ -1,0 +1,20 @@
+
+    <h1>{{.PageTitle}}</h1>
+    <table className="  border-separate [border-spacing:0.75rem]">
+        <tr className="row  text-slate-400">
+          <td className="col">Name</td>
+          <td className="col">Logo</td>
+          <td className="col">Position</td>
+          <td className="col"></td>
+        </tr>
+
+        {{range .Teams}}
+        <tr className="row ">
+          <td className="col">{{.Name}}</td>
+          <td className="col">{{.Logo}}</td>
+          <td className="col">{{.Position}}</td>
+        </tr>
+        {{end}}
+      </table>
+       
+    </ul>

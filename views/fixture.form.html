@@ -1,0 +1,12 @@
+{{if .Success}}
+    <h1>Thanks for your message!</h1>
+{{else}}
+    <h1>Fixtures</h1>
+    <form method="POST" action="/teams">
+        <label>Name:</label><br />
+        <input type="text" name="name"><br />
+        <label>Logo:</label><br />
+        <input type="file" name="logo"><br />
+        <input type="submit">
+    </form>
+{{end}}
